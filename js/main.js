@@ -1,4 +1,4 @@
-// Nav scroll behaviour
+// Nav scroll behaviour — translucent blur header
 window.addEventListener('scroll', function() {
   const nav = document.getElementById('nav');
   if (window.scrollY > 60) {
@@ -7,6 +7,33 @@ window.addEventListener('scroll', function() {
     nav.classList.remove('scrolled');
   }
 });
+
+// Active section highlight — thin gold underline on nav link
+(function() {
+  var sections = document.querySelectorAll('section[id], div[id]');
+  var navLinks = document.querySelectorAll('nav ul li a[href^="#"]');
+  if (!navLinks.length || !sections.length) return;
+
+  function setActive(id) {
+    navLinks.forEach(function(a) {
+      if (a.getAttribute('href') === '#' + id) {
+        a.classList.add('nav-active');
+      } else {
+        a.classList.remove('nav-active');
+      }
+    });
+  }
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        setActive(entry.target.id);
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+
+  sections.forEach(function(s) { observer.observe(s); });
+})();
 
 // Contact form — Formspree submission
 (function() {
