@@ -129,3 +129,10 @@ window.addEventListener('scroll', function() {
     if (window.innerWidth > 1024) closeMenu();
   });
 })();
+
+
+// Footer copyright year
+(function() {
+  var y = document.getElementById('copyright-year');
+  if (y) y.textContent = new Date().getFullYear();
+})();
